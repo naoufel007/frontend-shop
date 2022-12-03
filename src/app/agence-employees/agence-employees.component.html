@@ -1,0 +1,46 @@
+<div class="row search-field" *ngIf="employees?.length != 0">
+  <div class="form-group form-black label-floating is-empty col-md-4">
+    <label class="control-label">Recherche par nom</label>
+    <input type="text" class="form-control" [(ngModel)]="keyword">
+  </div>
+</div>
+<table class="table table-striped table-hover" *ngIf="employees?.length != 0">
+  <thead>
+    <th class="text-center">
+      <b>Nom</b>
+    </th>
+    <th class="text-center">
+      <b>Total de crédits</b>
+    </th>
+    <th class="text-center">
+      <b>Total de ventes</b>
+    </th>
+    <th class="text-center">
+      <b>Total de retours</b>
+    </th>
+    <th class="text-center">
+      <b>Total de services</b>
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of employees | employeesFilter:keyword">
+      <td class="text-center">
+        <b>{{e.name}}</b>
+      </td>
+      <td class="text-center text-success">
+        <b>{{e.totalCredits}}</b>
+      </td>
+      <td class="text-center text-success">
+        <b>{{e.totalVentes}}</b>
+      </td>
+      <td class="text-center text-danger">
+        <b>{{e.totalRetours}}</b>
+      </td>
+      <td class="text-center text-success">
+        <b>{{e.totalService}}</b>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h4 *ngIf="!loading && employees?.length == 0">Aucun employees dans cette agence.</h4>
+<spinner *ngIf="loading" [text]="'Chargement des employees'"></spinner>

@@ -1,0 +1,85 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header" data-background-color="purple">
+        <h4 class="title">Historique du crédit:</h4>
+      </div>
+      <div class="card-content table-responsive">
+        <button (click)="addPaiment = true" type="button" class="btn btn-primary btn-sm">Ajouter
+          paiment</button>
+        <div *ngIf="addPaiment">
+          <div class="row">
+            <div class="col-md-4">
+              <input class="form-control" type="number" placeholder="Valeur" [(ngModel)]="newPaiment.montant">
+            </div>
+            <div class="col-md-4">
+              <select [(ngModel)]="newPaiment.type" class="form-control" colspan="2">
+                <option *ngFor="let t of availablePaimentTypes" [ngValue]="t.code">{{t.label}}</option>
+              </select>
+            </div>
+            <div class="col-md-4" *ngIf="newPaiment.type == 'H'">
+              <input class="form-control" type="text" placeholder="Numéro de chéque" [(ngModel)]="newPaiment.checkNumber">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button (click)="createPaiment()" type="button" title="Valider" class="btn btn-success btn-sm pull-right">
+                Valider
+              </button>
+              <button (click)="cancelAddPaiment()" type="button" title="Annuler" class="btn btn-danger btn-sm pull-right">
+                Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+        <button (click)="goBack()" type="button" class="btn btn-primary btn-sm">Retour</button>
+        <table class="table table-striped table-hover" *ngIf="paiments.length != 0">
+          <thead>
+            <th class="text-center">
+              <b> Numéro </b>
+            </th>
+            <th class="text-center">
+              <b> Utilisateur </b>
+            </th>
+            <th class="text-center">
+              <b> Montant (DH) </b>
+            </th>
+            <th class="text-center">
+              <b> Type </b>
+            </th>
+            <th class="text-center">
+              <b> Date </b>
+            </th>
+            <th class="text-center">
+              <b> Actions </b>
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of paiments">
+              <td class="text-center">
+                <b>{{p.id}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{p.user}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{p.montant}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{getType(p)}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{p.date | date:'dd/MM/yyyy'}}</b>
+              </td>
+
+              <td class="text-center">
+                <a class="text-danger" rel="nofollow" (click)="delete(p)">Supprimer</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h4 *ngIf="!loading && paiments.length == 0">Aucune historique trouvée.</h4>
+      </div>
+    </div>
+  </div>
+</div>

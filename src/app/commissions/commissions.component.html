@@ -1,0 +1,87 @@
+<div class="card">
+  <div class="card-header" data-background-color="blue">
+    <h4>Liste des commissions:</h4>
+  </div>
+
+  <div class="card-content">
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <span>Total:
+          <b class="text-success" [style.color]="'blue'">{{pagedArray | mydate:date |sum:'commission' | number }} DH</b>
+        </span>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-6">
+            <date-picker (picked)="filterByDate($event)"></date-picker>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-6">
+            <div class="form-group form-black">
+              <input type="text" placeholder="Produit, Client" class="form-control" [(ngModel)]="keyword">
+            </div>
+          </div>
+
+        </div>
+        <h4 class="text-danger" *ngIf="commissions && commissions.length == 0">
+          <b class="text-danger">Aucune commission trouvée.</b>
+        </h4>
+        <div class="pull-right">
+          <pagination 
+            [itemsPerPage]="itemsPerPage" 
+            [totalItems]="commissions.length" 
+            [(ngModel)]="currentPage" 
+            [maxSize]="maxSize"
+            previousText="Précedent"
+            nextText="Suivant" 
+            (pageChanged)="pageChanged($event)" 
+            *ngIf="isPaginationDisplayed()"></pagination>
+        </div>
+        <table class="table" *ngIf="commissions && commissions.length != 0 || !loadingCommissions">
+          <thead>
+            <th class="text-center">Client</th>
+            <th class="text-center">Produit</th>
+            <th class="text-center">Quantité</th>
+            <th class="text-center">Prix de vente (DH)</th>
+            <th class="text-center">Remise (%)</th>
+            <th class="text-center">Commission (DH)</th>
+            <th class="text-center">Date</th>
+          </thead>
+          <tbody>
+            <tr *ngIf="(pagedArray | mydate:date)?.length == 0">
+              <td colspan="4">
+                <b class="text-danger">Aucune commission pour la date choisie.</b>
+              </td>
+            </tr>
+            <tr *ngFor="let c of pagedArray | mydate:date | filterBy : keyword : 'client':'produit'" [ngClass]="c.commission < 0 ? 'text-danger':''">
+
+              <td class="text-center">
+                <b>{{c.client}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{c.produit}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{c.quantite}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{c.prixVente}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{c.remise? c.remise : 0 }}</b>
+              </td>
+              <td class="text-center">
+                <b>{{c.commission}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{c.date | date:'dd/MM/yyyy'}}</b>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+        <spinner
+                    [text]="'Chargement des commissions...'"
+                    *ngIf="loadingCommissions"
+                  ></spinner>
+      </div>
+    </div>
+  </div>
+</div>

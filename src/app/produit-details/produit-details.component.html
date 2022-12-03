@@ -1,0 +1,131 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">Détails du produit.</h4>
+          </div>
+          <div class="card-content">
+            <spinner [text]="'Chargement du produit en cours.'" *ngIf="loading"></spinner>
+            <form *ngIf="!loading">
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Nom:
+                    <b>{{produit.name}}</b>
+                  </label>
+                </div>
+
+                <div class="col-md-3">
+                  <label>Code:
+                    <b>{{produit.code}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>Prix de vente:
+                    <b>{{produit.prixVente}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>Prix d'achat:
+                    <b>{{produit.prixAchat}}</b>
+                  </label>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-3 col-sm-3">
+                  <label>Min:
+                    <b>{{produit.min}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                  <label>Max:
+                    <b>{{produit.max}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                  <label>Quantite:
+                    <b>{{produit.quantite}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                  <label>Quantite casio:
+                    <b>{{produit.quantiteCasio}}</b>
+                  </label>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Points détails:
+                    <b>{{produit.pointsD}}</b>
+                  </label>
+
+                </div>
+                <div class="col-md-3">
+                  <label>Points gros:
+                    <b>{{produit.pointsG}}</b>
+                  </label>
+
+                </div>
+                <div class="col-md-3">
+                  <label>Pourcentage détails:
+                    <b>{{produit.pourcentageD}}</b>
+                  </label>
+
+                </div>
+                <div class="col-md-3">
+                  <label>Pourcentage gros:
+                    <b>{{produit.pourcentageG}}</b>
+                  </label>
+
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-3">
+                  <label>Prix achat casio:
+                    <b>{{produit.prixAchatCasio}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>Prix vente casio:
+                    <b>{{produit.prixVenteCasio}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>Remise:
+                    <b>{{produit.remise}}</b>
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <label>Prix vente gros:
+                    <b>{{produit.prixVenteGros}}</b>
+                  </label>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-md-12">
+                  <product-history
+                  [productHistory]="productHistory"
+                ></product-history>
+                </div>
+              </div>
+              <button class="btn btn-primary" (click)="goBack()">
+                <i class="material-icons">
+                  keyboard_backspace
+                </i> Retour</button>
+                <button class="btn btn-danger" (click)="edit()">
+                    <i class="material-icons">
+                      edit
+                    </i> Modifier</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

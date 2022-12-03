@@ -1,0 +1,49 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">{{getTitre()}}</h4>
+          </div>
+          <div class="card-content">
+            <form *ngIf="!loading">
+              <div class="form-group form-black {{client.nom?'label-floating':''}}">
+                <label class="control-label">Nom</label>
+                <input required name="nom" type="text" class="form-control" [(ngModel)]="client.nom">
+              </div>
+              <div class="form-group form-black {{client.cin?'label-floating':''}}">
+                <label class="control-label">CIN</label>
+                <input required name="cin" type="text" class="form-control" [(ngModel)]="client.cin">
+              </div>
+              <div class="form-group form-black {{client.cin?'label-floating':''}}">
+                <label class="control-label">Téléphone</label>
+                <input required name="cin" type="tel" class="form-control" [(ngModel)]="client.telephone">
+              </div>
+              <div class="form-group form-black {{client.credit?'label-floating':''}}">
+                <label class="control-label">Crédit</label>
+                <input name="credit" type="number" class="form-control" [(ngModel)]="client.credit">
+              </div>
+              <div class="row" *ngIf="agences">
+                <div class="col-md-6 col-sm-6">
+                  <angular2-multiselect [data]="agences" [(ngModel)]="selectedAgences" (onSelect)="selectionActionPerformed($event)" [settings]="dropdownSettings"
+                    name="fournisseurs">
+                  </angular2-multiselect>
+                </div>
+              </div>
+
+              <button *ngIf="!editMode" type="submit" class="btn btn-success pull-right" (click)="create()">
+                <i class="material-icons">add</i> Ajouter</button>
+              <button *ngIf="editMode" type="submit" class="btn btn-success pull-right" (click)="update()">
+                <i class="material-icons">create</i> Modifier</button>
+              <button type="submit" class="btn btn-danger pull-right" (click)="cancel()">
+                <i class="material-icons">clear</i> Annuler</button>
+              <div class="clearfix"></div>
+            </form>
+            <spinner *ngIf="loading" [text]="'Chargement du client'"></spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

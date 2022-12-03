@@ -1,0 +1,41 @@
+<div class="row search-field" *ngIf="achats.length != 0">
+    <input type="text" class="form-control" placeholder="Recherche" [(ngModel)]="keyword">
+</div>
+<table class="table table-striped table-hover" *ngIf="achats.length != 0">
+    <thead>
+        <th class="text-center">
+            <b> Montant </b>
+        </th>
+        <th class="text-center">
+            <b> Fournisseur </b>
+        </th>
+        <th class="text-center">
+            <b> Utilisateur </b>
+        </th>
+        <th class="text-center">
+            <b> Date </b>
+        </th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let achat of achats | filterAchatsBy: keyword">
+            <td class="text-center">
+                <b>{{achat.montant}}</b>
+            </td>
+            <td class="text-center">
+                <b>{{achat.fournisseur?.name}}</b>
+            </td>
+            <td class="text-center">
+                <b>{{achat.user}}</b>
+            </td>
+            <td class="text-center">
+                <b>{{achat.date | date:'dd/MM/yyyy'}}</b>
+            </td>
+            
+        </tr> 
+    </tbody>
+</table>
+<h4 *ngIf="!loading && achats.length == 0">Aucun achat dans cette agence.</h4>
+<spinner
+    *ngIf="loading"
+    [text] = "'Chargement des achats'"
+></spinner>

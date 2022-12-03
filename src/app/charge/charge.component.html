@@ -1,0 +1,37 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header" data-background-color="green">
+        <h4 class="title">Liste des charges:</h4>
+      </div>
+
+      <div class="card-content table-responsive">
+        <div class="row search-field">
+          <!-- <pagination 
+            class="pull-right" 
+            [totalItems]="clients.length" 
+            [(ngModel)]="currentPage" 
+            previousText="Précedent"
+            nextText="Suivant" 
+            [maxSize]="maxSize" 
+            [itemsPerPage]="itemsPerPage" 
+            (pageChanged)="pageChanged($event)"
+            *ngIf="isPaginationDisplayed()"></pagination> -->
+        </div>
+
+        <tabset [justified]="true" *ngIf="!loadingView">
+          <tab heading="{{agence.name}}" *ngFor="let agence of agences" (select)="loadCharges(agence.id)">
+            <spinner [text]="'Chargement des charges en cours'" *ngIf="loadingCharges"></spinner>
+            <list-charges [chargesWrapper]="chargesWrapper" [agence]="agence" *ngIf="!loadingCharges"></list-charges>
+          </tab>
+        </tabset>
+
+
+
+
+
+        <spinner *ngIf="loadingView" [text]="'Chargemens en cours'"></spinner>
+      </div>
+    </div>
+  </div>
+</div>

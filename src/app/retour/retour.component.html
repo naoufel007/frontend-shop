@@ -1,0 +1,69 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">{{getTitre()}}</h4>
+          </div>
+          <div class="card-content">
+            <form>
+              <div class="row">
+                  <div class="col-md-3">
+                      <div class="form-group form-group form-black label-floating">
+                        <label class="control-label">Numéro de vente:</label>
+                        <input class="form-control" [(ngModel)]="venteId">
+                      </div>
+                    </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <div *ngIf="clients">
+                      <angular2-multiselect 
+                        [data]="clients" 
+                        [(ngModel)]="selectedClient"
+                        [settings]="clientDropdownSettings" name="clients">
+                      </angular2-multiselect> 
+                    </div>
+                </div> 
+              </div>
+              <div class="row">
+                <types-vente 
+                  *ngIf="!editMode"
+                  class="col-md-4"
+                  (picked)="typeVente = $event"
+                  ></types-vente>
+                  <types-vente 
+                  *ngIf="editMode"
+                  [selectedType] = "editionType"
+                  class="col-md-4"
+                  (picked)="typeVente = $event"
+                  ></types-vente>
+                  
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <vente-line [produits]="produits" [lines]="lines" [edit]="editMode"></vente-line> 
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success pull-right" (click)="confirm()" *ngIf="!editMode">
+                <span *ngIf="!posting"><i class="material-icons">edit</i> Valider</span>
+                <spinner *ngIf="posting"></spinner>
+              </button>
+              <button type="submit" class="btn btn-success pull-right" (click)="update()" *ngIf="editMode">
+                <span *ngIf="!posting"><i class="material-icons">edit</i> Modifier</span>
+                <spinner *ngIf="posting"></spinner>
+              </button>
+              <button type="submit" class="btn btn-danger pull-right" (click)="cancel()">
+                <i class="material-icons">clear</i> Annuler
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

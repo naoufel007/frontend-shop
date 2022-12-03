@@ -1,0 +1,69 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="redirect()" *ngIf="isAdmin">
+      <i class="material-icons">add</i> Ajouter nouveau produit</button>
+    <div class="card">
+      <div class="card-header" data-background-color="green">
+        <h2 class="title">Liste des produits:</h2>
+        <h4>
+          Gain :
+          <strong>{{total | number:'1.2'}} DH</strong>
+        </h4>
+        <h4>
+          Total des achats :
+          <strong>{{totalAchats | number:'1.2'}} DH</strong>
+        </h4>
+      </div>
+      <div class="card-content table-responsive">
+        <div class="row search-field">
+          <div class="form-group form-black label-floating is-empty col-md-4 col-sm-5">
+            <label class="control-label">Recherche</label>
+            <input type="text" class="form-control" (keyup)="searchTerm$.next($event.target.value)">
+          </div>
+          <pagination class="pull-right" [totalItems]="produits.length" [(ngModel)]="currentPage" previousText="Précedent"
+          nextText="Suivant" [maxSize]="maxSize" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"
+          *ngIf="isPaginationDisplayed()"></pagination>
+        </div>
+        
+        <table class="table table-striped" *ngIf="produits && !loadingProduits">
+          <thead class="text-danger">
+            <tr>
+              <th class="text-center">Nom</th>
+              <th class="text-center">Code</th>
+              <th *ngIf="isAdmin" class="text-center">Agence</th>
+              <th class="text-center">Prix d'achat</th>
+              <th class="text-center">Prix achat casio</th>
+              <th class="text-center">Prix de vente</th>
+              <th class="text-center">Prix de vente gros</th>
+              <th class="text-center">Quantité</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr *ngIf="pagedArray.length == 0">
+                  <td colspan="9">
+                    <b class="text-danger">Aucun produit trouvé.</b>
+                  </td>
+                </tr>
+            <tr *ngFor="let p of pagedArray ">
+              <td class="text-center">{{p.name}}</td>
+              <td class="text-center">{{p.code}}</td>
+              <td *ngIf="isAdmin" class="text-center">{{p.agenceName}}</td>
+              <td class="text-center">{{p.prixAchat}}</td>
+              <td class="text-center">{{p.prixAchatCasio}}</td>
+              <td class="text-center">{{p.prixVente}}</td>
+              <td class="text-center">{{p.prixVenteGros}}</td>
+              <td class="text-center">{{p.quantite}}</td>
+              <td class="text-center">
+                <a class="text-success" rel="nofollow" (click)="show(p)">Détails</a> 
+                <a *ngIf="isAdmin" class="text-warning" rel="nofollow" (click)="edit(p)"> / Modifier</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <spinner *ngIf="loadingProduits" [text]="'Chargemens des produits'"></spinner>
+        <h4 *ngIf="!loadingProduits && produits.length == 0"></h4>
+      </div>
+    </div>
+  </div>
+</div>

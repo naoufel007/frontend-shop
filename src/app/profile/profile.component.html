@@ -1,0 +1,85 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">{{getTitre()}}</h4>
+          </div>
+          <div class="card-content">
+            <div class="row" *ngIf="!loading">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header" data-background-color="green">
+                    <h4 >Informations personnelles:</h4>
+                  </div>
+                  <div class="card-content">
+                    <form>
+                      <div class="form-group form-black label-floating {{!user.name?'is-empty':''}}">
+                        <label class="control-label">Nom</label>
+                        <input required name="nom" type="text" class="form-control" [(ngModel)]="user.name">
+                      </div>
+                      <div class="form-group form-black label-floating {{!user.cin? 'is-empty':''}}">
+                        <label class="control-label">CIN</label>
+                        <input required name="cin" type="text" class="form-control" [(ngModel)]="user.cin">
+                      </div>
+                      <div class="form-group form-black label-floating {{!user.cin? 'is-empty':''}}">
+                        <label class="control-label">Téléphone</label>
+                        <input required name="tel" type="tel" class="form-control" [(ngModel)]="user.telephone">
+                      </div>
+                      <div class="form-group form-black label-floating {{!user.addresse? 'is-empty':''}}">
+                        <label class="control-label">Addresse</label>
+                        <input name="adresse" type="text" class="form-control" [(ngModel)]="user.addresse">
+                      </div>
+                      <div class="form-group form-black label-floating {{!user.password ? 'is-empty':''}}">
+                        <label class="control-label">Mot de passe</label>
+                        <input name="password" type="text" class="form-control" [(ngModel)]="user.password">
+                      </div>
+                      <div class="row" *ngIf="agences">
+                        <angular2-multiselect (onSelect)="selectAgence($event)" [data]="agences" [(ngModel)]="selectedAgence" [settings]="agenceSettings"
+                            name="agences">
+                          </angular2-multiselect>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div> 
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-header" data-background-color="blue">
+                    <h4 >Configuration des pourcentages:</h4>
+                  </div>
+                  <div class="card-content">
+                    <form>
+                      
+                      <div class="form-group form-black">
+                        <label class="control-label">Pourcentage sur vente d'un produit casio</label>
+                        <input required name="nom" type="text" class="form-control" [(ngModel)]="user.pourcentageVenteCasio">
+                      </div>
+                      <div class="form-group form-black">
+                        <label class="control-label">Pourcentage sur achat d'un produit casio</label>
+                        <input required name="pourcentage-achat-casio" type="text" class="form-control" [(ngModel)]="user.pourcentageAchatCasio">
+                      </div>
+                      <div class="form-group form-black">
+                        <label class="control-label">Pourcentage d'un service</label>
+                        <input required name="pourcentage-service" type="text" class="form-control" [(ngModel)]="user.pourcentageService">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button *ngIf="!editMode" type="submit" class="btn btn-success pull-right" (click)="create()">
+              <i class="material-icons">add</i> Ajouter</button>
+            <button *ngIf="editMode" type="submit" class="btn btn-success pull-right" (click)="update()">
+              <i class="material-icons">create</i> Modifier</button>
+            <button type="submit" class="btn btn-danger pull-right" (click)="cancel()">
+              <i class="material-icons">clear</i> Annuler</button>
+            <div class="clearfix"></div>
+            <spinner *ngIf="loading" [text]="'Chargement de l\'utilisateur'"></spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

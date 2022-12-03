@@ -1,0 +1,73 @@
+<div class="container">
+  <span>Total:
+      <b class="text-success" [style.color]="'blue'">{{pagedArray | mydate:date |sum:'montant' | number }} DH</b>
+    </span>
+<div class="row">
+  <div class="col-md-3 col-lg-3 col-sm-3">
+    <date-picker (picked)="date = $event"></date-picker>
+  </div>
+  <div class="col-md-4 col-lg-4 col-sm-4">
+    <div class="form-group form-black">
+      <input type="text" placeholder="Client" class="form-control" [(ngModel)]="keyword">
+    </div>
+  </div>
+  <div class="pull-right">
+    <pagination [itemsPerPage]="itemsPerPage" [totalItems]="retours.length" [maxSize]="maxSize" [(ngModel)]="currentPage" previousText="Précedent"
+      nextText="Suivant" (pageChanged)="pageChanged($event)" *ngIf="isPaginationDisplayed()"></pagination>
+  </div>
+</div>
+</div>
+<table class="table table-striped table-hover" *ngIf="retours && retours.length != 0">
+<thead>
+  <th class="text-center">
+    <b> Numéro </b>
+  </th>
+  <th class="text-center">
+    <b> Client </b>
+  </th>
+  <th class="text-center">
+    <b> Utilisateur </b>
+  </th>
+  <th class="text-center">
+    <b> Montant </b>
+  </th>
+  <th class="text-center">
+    <b> Date </b>
+  </th>
+
+  <th class="text-center" *ngIf="showActions">
+    Actions
+  </th>
+</thead>
+<tbody>
+  <tr *ngIf="(pagedArray | mydate:date | filterBy : keyword : 'client.nom')?.length == 0">
+    <td colspan="5">
+      <b class="text-danger">Aucun retour trouvée pour le filtre choisi</b>
+    </td>
+  </tr>
+  <tr *ngFor="let retour of pagedArray | mydate:date | filterBy : keyword : 'client.nom' ">
+    <td class="text-center">
+      <b>{{retour.id}}</b>
+    </td>
+    <td class="text-center">
+      <b>{{retour.client.nom}}</b>
+    </td>
+    <td class="text-center">
+      <b>{{retour.user}}</b>
+    </td>
+    <td class="text-center">
+      <b>{{retour.montant}}</b>
+    </td>
+    <td class="text-center">
+      <b>{{retour.date | date:'dd/MM/yyyy'}}</b>
+    </td>
+
+    <td class="text-center" *ngIf="showActions">
+      <a class="text-success" rel="nofollow" (click)="show(retour)">Consulter</a> /
+      <!-- <a class="text-warning" rel="nofollow" (click)="edit(retour)">Modifier</a> / -->
+      <a class="text-danger" rel="nofollow" (click)="delete(retour)">Supprimer</a>
+    </td>
+  </tr>
+</tbody>
+</table>
+<h4 *ngIf="!loading && retours.length == 0">Aucun retour dans cette agence.</h4>

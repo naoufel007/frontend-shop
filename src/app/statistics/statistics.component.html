@@ -1,0 +1,67 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header" data-background-color="green">
+        <h4 class="title">Statistiques:</h4>
+      </div>
+
+      <div class="card-content table-responsive">
+        <div class="row">
+          <div class="col-md-1 col-sm-1">
+            <div class="form-group">
+              Mois:
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+              <select (change)="filterChanged()" style="display:inline" class="form-control" id="sel1" [(ngModel)]="month">
+                <option *ngFor="let m of months" [ngValue]="m.code">{{m.nom}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-1 col-sm-1">
+            <div class="form-group">
+              Annéee:
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+              <select (change)="filterChanged()" style="display:inline" class="form-control" id="sel1" [(ngModel)]="year">
+                <option [ngValue]="2019">2019</option>
+                <option [ngValue]="2020">2020</option>
+                <option [ngValue]="2021">2021</option>
+                <option [ngValue]="2022">2022</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <tabset [justified]="true">
+          <tab heading="{{agence.name}}" *ngFor="let agence of agences" (select)="loadStats(agence.id, year, month)">
+            <spinner [text]="'Chargement des graphes en cours'" *ngIf="loadingStats"></spinner>
+            <br />
+            <div *ngIf="!loadingStats">
+              <io-chart [id]="12" [data]="ioData"> </io-chart>
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <products-chart [type]="'success'" [id]="12" [title]="'Les produits les plus vendus'"
+                    [data]="bestSellerProducts" [labels]="bestSellerProductsLabels">
+                  </products-chart>
+                </div>
+                <div class="col-md-6 col-lg-6">
+                  <products-chart [type]="'danger'" [color]="'rgb(255, 99, 132)'" [id]="34"
+                    [title]="'Les produits les moins vendus'" [data]="worstSellerProducts"
+                    [labels]="worstSellerProductsLabels">
+                  </products-chart>
+                </div>
+              </div>
+              <div class="row">
+                <employees-chart [data]="employees.data" [labels]="employees.labels">
+                </employees-chart>
+              </div>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>

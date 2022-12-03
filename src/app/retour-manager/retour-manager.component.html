@@ -1,0 +1,32 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="newRetours()">
+      <i class="material-icons">add</i> Ajouter nouveau retour</button>
+    <div class="row">
+      <div [ngClass]="{'col-md-6': detailedRetour,'col-md-12':!detailedRetour }">
+        <div class="card">
+          <div class="card-header" data-background-color="green">
+            <h4 class="title">Liste des retours:</h4>
+          </div>
+          <div class="card-content table-responsive">
+            <retour-list
+              *ngIf = "!loading"
+              [retours] = "retours"
+              (onDelete) = "delete($event)"
+              (onShow) = "show($event)" 
+              (onEdit) = "edit($event)"
+            ></retour-list>
+            
+            <spinner *ngIf="loading" [text]="'Chargement des retours'"></spinner>
+          </div>
+        </div>
+      </div>
+      <sales-details
+        *ngIf = "displayDetails"
+        [detailedVente] = "detailedRetour"
+        [displayed] = "displayDetails"
+        (onclose)="displayDetails = false"
+      ></sales-details>
+    </div>
+  </div>
+</div>

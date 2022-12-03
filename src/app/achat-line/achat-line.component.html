@@ -1,0 +1,44 @@
+<div class="row" *ngFor="let l of lines;let i = index">
+    <div class="col-md-2">
+      <div class="form-group">
+        <angular2-multiselect [data]="produits" (onSelect)="selectionActionPerformed($event,lines[i])" [(ngModel)]="lines[i].produit"
+          [settings]="dropdownSettings" name="produits">
+        </angular2-multiselect>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group form-group form-black label-floating  {{!edit?'is-empty':''}}">
+        <label class="control-label">Quantité</label>
+        <input class="form-control" [(ngModel)]="lines[i].quantite" type="number">
+        <span class="text-danger" *ngIf="lines[i].produit && lines[i].quantite -(-lines[i].produit[0].quantite) > lines[i].produit[0].max">
+          <b>Le maximum {{lines[i].produit[0].max}} pour ce produit est dépassé.</b>
+        </span>
+      </div>
+    </div>
+    
+    <div class="col-md-3">
+      <div class="form-group form-group form-black label-floating {{!lines[i].price?'is-empty':''}}">
+        <label class="control-label">Prix unitaire</label>
+        <input class="form-control" [(ngModel)]="lines[i].price">
+      </div>
+    </div>
+    <div class="col-md-1">
+      <div class="form-group form-group form-black label-floating {{!edit?'is-empty':''}} ">
+        <label class="control-label">Remise</label>
+        <input class="form-control" [(ngModel)]="lines[i].remise">
+      </div>
+    </div>
+    <div class="col-md-2" *ngIf="lines[i].produit">
+      <div class="form-group">
+        <type-produit *ngIf="edit" [selectedType]="lines[i].type" (picked)="setTypeProduit(i,$event)"></type-produit>
+        <type-produit *ngIf="!edit" (picked)="setTypeProduit(i,$event)"></type-produit>
+      </div>
+    </div>
+    <button (click)="removeLine(i)" *ngIf="!edit && lines.length > 1" class="btn btn-danger btn-simple btn-xs" rel="tooltip"
+      title="Remove" type="button">
+      <i class="material-icons">close</i>
+      <div class="ripple-container"></div>
+    </button>
+  </div>
+  
+  <button (click)="addLine()" class="btn btn-warning" *ngIf="!edit && lines.length != produits.length">Ajouter produit</button>

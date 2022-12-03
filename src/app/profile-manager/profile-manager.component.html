@@ -1,0 +1,93 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="redirect()">
+      <i class="material-icons">add</i> Ajouter nouveau utilisateur</button>
+    <div class="card">
+      <div class="card-header" data-background-color="green">
+        <h4 class="title">Liste des utilisateurs:</h4>
+      </div>
+
+      <div class="card-content table-responsive">
+        <div class="row">
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+              <label for="years">Année</label>
+              <select style="display:inline" class="form-control" id="years" [(ngModel)]="selectedYear">
+                <option 
+                  *ngFor= "let year of years" 
+                  [selected]="year === currentYear"
+                  [value]="year">{{year}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+              <label for="months">Mois</label>
+              <select  style="display:inline" class="form-control" id="months" [(ngModel)]="selectedMonth">
+                <option 
+                  *ngFor= "let m of months"
+                  [value]="m.code">{{m.nom}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2">
+            <div class="form-group">
+              <button (click)="search()" class="btn btn-success btn-xs"> Recherche</button>
+            </div>
+          </div>
+        </div>
+        <div class="row search-field">
+          <div class="form-group form-black label-floating is-empty col-md-4 col-sm-5">
+            <label class="control-label">Recherche</label>
+            <input type="text" class="form-control" (keyup)="keyup($event.target.value)">
+          </div>
+          <div class="col-md-1 col-sm-1">
+            <div class="form-group">
+              Agence:
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4" *ngIf="agences?.length != 0">
+            <div class="form-group">
+              <select style="display:inline" class="form-control" id="sel1" [(ngModel)]="chosenAgence">
+                <option [ngValue]=""></option>
+                <option *ngFor="let a of agences" [ngValue]="a.id">{{a.itemName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <table class="table" *ngIf="!loadingUsers">
+          <thead class="text-danger">
+            <tr>
+              <th class="text-center">Nom</th>
+              <th class="text-center">CIN</th>
+              <th class="text-center">Téléphone</th>
+              <th class="text-center">Agence</th>
+              <th class="text-center">Total commissions du mois (DH)</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead> 
+          <tbody>
+            <tr *ngIf="(users | mydate:date)?.length == 0">
+              <td colspan="6">
+                <b class="text-danger">Aucun utilisateur trouvé.</b>
+              </td>
+            </tr>
+            <tr *ngFor="let c of users | monoAgence : chosenAgence">
+              <td class="text-center">{{c.name}}</td>
+              <td class="text-center">{{c.cin}}</td>
+              <td class="text-center">{{c.telephone}}</td>
+              <td class="text-center">{{c.agence.name}}</td>
+              <td class="text-center">{{c.totalCommissions}}</td>
+              <td class="text-center">
+                <a class="text-success" rel="nofollow" (click)="show(c)">Consulter</a> /
+                <a class="text-warning" rel="nofollow" (click)="edit(c)">Modifier</a> /
+                <a class="text-secondary" rel="nofollow" >Supprimer</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <spinner *ngIf="loadingUsers" [text]="'Chargemens des utilisateurs'"></spinner>
+      </div>
+    </div>
+  </div>
+</div>

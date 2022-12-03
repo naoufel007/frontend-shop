@@ -1,0 +1,14 @@
+<div class="input-group ">
+    <input class="form-control"
+    placeholder="Filtrer par date"
+    bsDaterangepicker
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    [bsConfig]="bsConfig"
+    (bsValueChange)="valueChanged($event)">
+    <span class="input-group-btn">
+        <button type="button" (click)="resetFilter()" rel="tooltip" title="Vider" class="btn btn-danger btn-simple btn-xs to-hide">
+            <i class="material-icons">close</i>
+        </button>
+    </span>
+</div>

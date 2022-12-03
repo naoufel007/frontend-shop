@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" data-background-color="red">
+                <h4 class="title">{{getTitre()}}</h4>
+            </div>
+            <div class="card-content">
+                <form >
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group form-black label-floating is-empty">
+                                <label class="control-label" *ngIf="!editMode">Nom</label>
+                                <input required name="fname"  type="text" class="form-control" [(ngModel)]="newFournisseur.name" >
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-6">
+                            <div class="form-group form-black label-floating is-empty">
+                                <label class="control-label" *ngIf="!editMode">Addresse</label>
+                                <input required name="lname"  type="text" class="form-control" [(ngModel)]="newFournisseur.adresse">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating is-empty">
+                                <label class="control-label" *ngIf="!editMode">N° Téléphone</label>
+                                <input required name="tel"  type="text" class="form-control" [(ngModel)]="newFournisseur.telephone">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group form-black label-floating is-empty">
+                                <label class="control-label" *ngIf="!editMode">Fax</label>
+                                <input required name="tel"  type="text" class="form-control" [(ngModel)]="newFournisseur.fax">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="form-group float-label-control col-md-4">
+                           <multiselect *ngIf="agences"
+                            [list]="agences"
+                            [selectedItems]="newFournisseur.agences"
+                            (selected)="getSelectedAgences($event)"
+                           ></multiselect>
+                        </div>
+                    </div> -->
+                    <button *ngIf="!editMode" type="submit" class="btn btn-success pull-right" (click)="createFournisseur()"><i class="material-icons">add</i> Ajouter</button>
+                    <button *ngIf="editMode" type="submit" class="btn btn-success pull-right" (click)="modifierFournisseur()"><i class="material-icons">create</i> Modifier</button>
+                    <button type="submit" class="btn btn-danger pull-right" (click)="cancelFournisseur()"><i class="material-icons">clear</i> Annuler</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

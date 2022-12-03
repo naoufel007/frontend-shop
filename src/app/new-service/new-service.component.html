@@ -1,0 +1,39 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div>
+        <div class="card">
+          <div class="card-header" data-background-color="green">
+            <h4 class="title">Nouveau bon de service:</h4>
+          </div>
+          <div class="card-content table-responsive">
+            <form>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black">
+                    <label class="control-label">Description</label>
+                    <input required name="nom" type="text" class="form-control" [(ngModel)]="service.description">
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="form-group form-black">
+                    <label class="control-label">Montant</label>
+                    <input required name="montant" type="number" class="form-control" [(ngModel)]="service.montant">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <button type="submit" class="btn btn-success pull-right" (click)="crateService()">
+                      <i class="material-icons">add</i> Ajouter</button>
+                    <button type="submit" class="btn btn-danger pull-right" (click)="cancelService()">
+                      <i class="material-icons">clear</i> Annuler</button>
+                    <div class="clearfix"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="input-group">
+<input type="text" (bsValueChange)="valueChanged($event)" class="form-control" bsDatepicker [bsValue]="bsValue" [bsConfig]="bsConfig">
+<span class="input-group-btn">
+  <button type="button" (click)="resetFilter()" rel="tooltip" title="Vider" class="btn btn-danger btn-simple btn-xs">
+    <i class="material-icons">close</i>
+  </button>
+</span>
+</div>

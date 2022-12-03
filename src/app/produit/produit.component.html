@@ -1,0 +1,131 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">{{getTitre()}}</h4>
+          </div>
+          <div class="card-content">
+            <form>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{!produit.name ? 'is-empty' : ''}}">
+                    <label class="control-label">Nom</label>
+                    <input required name="nom" type="text" class="form-control" [(ngModel)]="produit.name">
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{!produit.code ? 'is-empty' : ''}}">
+                    <label class="control-label">Code</label>
+                    <input required name="code" type="text" class="form-control" [(ngModel)]="produit.code">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{!produit.remise ? 'is-empty' : ''}}">
+                    <label class="control-label">Remise</label>
+                    <input required name="remise" type="text" class="form-control" [(ngModel)]="produit.remise">
+                  </div>
+                </div>
+                <div class="col-md-3" *ngIf="editMode">
+                  <div class="form-group form-black label-floating {{!produit.prixVenteGros ? 'is-empty' : ''}}">
+                    <label class="control-label">Prix vente gros</label>
+                    <input required name="prix-vente-gros" type="text" class="form-control" [(ngModel)]="produit.prixVenteGros">
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="editMode">
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{!produit.prixVente ? 'is-empty' : ''}}">
+                      <label class="control-label">Prix de vente</label>
+                    <input required name="pv" type="number" class="form-control" value [(ngModel)]="produit.prixVente">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{!produit.prixVenteCasio ? 'is-empty' : ''}}">
+                      <label class="control-label">Prix de vente casio</label>
+                    <input required name="pvc" type="number" class="form-control" value [(ngModel)]="produit.prixVenteCasio">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{!produit.prixAchat ? 'is-empty' : ''}}">
+                      <label class="control-label">Prix d'achat</label>
+                    <input required name="pa" type="number" class="form-control" [(ngModel)]="produit.prixAchat">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{!produit.prixAchatCasio ? 'is-empty' : ''}}">
+                      <label class="control-label">Prix d'achat casio</label>
+                    <input required name="pac" type="number" class="form-control" [(ngModel)]="produit.prixAchatCasio">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group form-black">
+                      <label class="control-label">Min</label>
+                      <input required name="min" type="number" class="form-control" [(ngModel)]="produit.min">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="form-group form-black">
+                        <label class="control-label">Max</label>
+                        <input required name="max" placeholder="Max" type="number" class="form-control" [(ngModel)]="produit.max">
+                      </div>
+                  
+                </div>
+                <div class="col-md-2 col-sm-2" *ngIf="editMode"> 
+                    <div class="form-group form-black ">
+                        <label class="control-label">Quantité</label>
+                        <input required name="qte" type="number" class="form-control" [(ngModel)]="produit.quantite">
+                      </div>
+                </div>
+                <div class="col-md-2 col-sm-2" *ngIf="editMode"> 
+                  <div class="form-group form-black ">
+                      <label class="control-label">Quantité casio</label>
+                      <input required name="qte" type="number" class="form-control" [(ngModel)]="produit.quantiteCasio">
+                    </div>
+              </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{produit.pointsD ? '': 'is-focused'}}">
+                    <label class="control-label">Points détail</label>
+                    <input name="pointsD" type="number" class="form-control" [(ngModel)]="produit.pointsD">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{produit.pointsG ? '': 'is-focused' }}">
+                    <label class="control-label">Points gros</label>
+                    <input name="pointsG" type="number" class="form-control" [(ngModel)]="produit.pointsG">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{produit.pourcentageD ? '': 'is-focused' }}">
+                    <label class="control-label">Pourcentage détails</label>
+                    <input name="pourcentageD" type="number" class="form-control" [(ngModel)]="produit.pourcentageD">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group form-black label-floating {{produit.pourcentageG ? '' : 'is-focused'}}">
+                    <label class="control-label">Pourcentage gros</label>
+                    <input name="pourcentageG" type="number" class="form-control" [(ngModel)]="produit.pourcentageG">
+                  </div>
+                </div>
+              </div>
+             
+              <button *ngIf="!editMode" type="submit" class="btn btn-success pull-right" (click)="crateProduit()">
+                <i class="material-icons">add</i> Ajouter</button>
+              <button *ngIf="editMode" type="submit" class="btn btn-success pull-right" (click)="modifierProduit()">
+                <i class="material-icons">create</i> Modifier</button>
+              <button type="submit" class="btn btn-danger pull-right" (click)="cancelProduit()">
+                <i class="material-icons">clear</i> Annuler</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

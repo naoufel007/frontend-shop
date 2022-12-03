@@ -1,0 +1,67 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="newService()">
+      <i class="material-icons" >add</i> Ajouter nouveau service</button>
+    <div class="row">
+      <div >
+        <div class="card">
+          <div class="card-header" data-background-color="green">
+            <h4 class="title">Liste des services:</h4>
+          </div>
+          <div class="card-content table-responsive">
+            <table class="table table-striped table-hover" *ngIf="!loading">
+              <thead>
+                <th class="text-center">
+                  Numéro
+                </th>
+                <th class="text-center">
+                  Montant
+                </th>
+                <th class="text-center">
+                  Utilisateur
+                </th>
+                <th class="text-center">
+                  Description
+                </th>
+                <th class="text-center">
+                    Date
+                  </th>
+                <th class="text-center">
+                  Actions
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngIf="!services">
+                  <td colspan="4">
+                    Aucun service n'est trouvé.
+                  </td>
+                </tr>
+                <tr *ngFor="let service of services">
+                  <td class="text-center">
+                    {{service.id}}
+                   </td>
+                   <td class="text-center">
+                    {{service.montant}}
+                   </td>
+                   <td class="text-center">
+                    {{service.user}}
+                   </td>
+                   <td class="text-center">
+                    {{service.description}}
+                   </td>
+                   <td class="text-center">
+                      <b>{{service.date | date:'dd/MM/yyyy'}}</b>
+                  </td>
+                   <td class="text-center">
+                    <a class="text-danger" rel="nofollow" (click)="delete(service)">Supprimer</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <spinner *ngIf="loading" [text]="'Chargement des services'"></spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

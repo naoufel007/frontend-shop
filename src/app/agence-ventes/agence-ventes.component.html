@@ -1,0 +1,22 @@
+<div class="row search-field" *ngIf="ventes.length != 0">
+    <input type="text" class="form-control" placeholder="Recherche" [(ngModel)]="keyword">
+</div>
+<table class="table table-striped table-hover" *ngIf="ventes.length != 0">
+    <thead>
+      <th class="text-center"><b>Montant</b></th>
+      <th class="text-center"><b>Utilisateur</b></th>
+      <th class="text-center"><b>Client</b></th>
+      <th class="text-center"><b>Date</b></th>
+
+    </thead>
+    <tbody>
+      <tr *ngFor="let v of ventes | filterventesBy:keyword">
+        <td class="text-center"><b>{{v.montant}}</b></td>
+        <td class="text-center"><b>{{v.user}}</b></td>
+        <td class="text-center"><b>{{v.client.nom}}</b></td>
+        <td class="text-center"><b>{{v.date | date:'dd/MM/yyyy'}}</b></td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 *ngIf="!loading && ventes.length == 0">Aucune ventes dans cette agence.</h4>
+  <spinner *ngIf="loading" [text]="'Chargement des ventes'"></spinner>

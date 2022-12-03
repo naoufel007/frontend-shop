@@ -1,0 +1,62 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card">
+        <div class="card-header" data-background-color="red">
+          <h4 class="title">Détail du client:</h4>
+        </div>
+        <div class="card-content table-responsive" *ngIf="!loading">
+          <div>
+            <spinner *ngIf="loading" [text]="'Chargement du client en cours...'"></spinner>
+            <div *ngIf="!loading && !client?.id" class="form-group">
+              <h4 class="title">Aucun client trouvé!</h4>
+            </div>
+          </div>
+          <div *ngIf="!loading && client.id">
+            <span class="text-success">
+              <h5>
+                <u>
+                  <b>Informations personnelles:</b>
+                </u>
+              </h5>
+            </span>
+            <div class="row">
+              <div class="col-md-3 col-sm-6 col-lg-3">
+                <b>Nom:</b>
+                <h4>{{client.nom}}</h4>
+              </div>
+              <div class="col-md-3 col-sm-6 col-lg-3">
+                <b>CIN:</b>
+                <h4>{{client.cin}}</h4>
+              </div>
+              <div class="col-md-2 col-sm-6 col-lg-2">
+                <b>Crédit:</b>
+                <h4>{{client.credit}}</h4>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4">
+                <b>Agences:</b>
+                <h4><span>{{printAgences()}}</span></h4>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <tabset [justified]="true">
+              <tab heading="Crédits">
+                <!-- (select)=""-->
+                <credit-list [credits]="client.credits" *ngIf="!loading"></credit-list>
+              </tab>
+              <tab heading="Vente">
+                <client-ventes-list *ngIf="!loading" [ventes]="client.ventes"></client-ventes-list>
+              </tab>
+            </tabset>
+          </div>
+          <button class="btn btn-primary" (click)="goBack()">
+            <i class="material-icons">
+              keyboard_backspace
+            </i> Retour</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

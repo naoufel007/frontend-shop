@@ -1,0 +1,70 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="newAchat()">
+      <i class="material-icons">add</i> Ajouter nouveau achat</button>
+    <div class="row">
+      <div [ngClass]="{'col-md-6': detailedAchat }">
+        <div class="card">
+          <div class="card-header" data-background-color="green">
+            <h4 class="title">Liste des achats:</h4>
+          </div>
+          <div class="card-content table-responsive">
+            <achat-list 
+              [loading]="loadingAchats" 
+              [achats]="achats" 
+              (showTriggered)="displayAchatDetails($event)"
+              *ngIf="!loadingAchats"></achat-list>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="detailedAchat">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">Détail achat:</h4>
+            <button (click)="detailedAchat = null" class="pull-right btn btn-danger btn-simple btn-xs">
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+          <div class="card-content table-responsive">
+            <div>
+              <b>Agence:</b>
+              <h4>{{detailedAchat.agence.name}}</h4>
+            </div>
+            <div>
+              <b>Fournisseur:</b>
+              <h4>{{detailedAchat.fournisseur.name}}</h4>
+            </div>
+            <div>
+              <table class="table table-hover table-striped">
+                <thead>
+                  <th class="text-center">Produit</th>
+                  <th class="text-center">PU</th>
+                  <th class="text-center">Quantité</th>
+                  <th class="text-center">Remise</th>
+                  <th class="text-center">Total par produit</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let p of detailedAchat.produit">
+                    <td class="text-center">
+                      {{p.produit.name}}
+                    </td>
+                    <td class="text-center">{{p.prix}}</td>
+                    <td class="text-center">{{p.quantite}}</td>
+                    <td class="text-center">{{p.remise}}</td>
+                    <td class="text-center">{{p.remise!=0 ? p.prix*p.quantite-(p.prix*p.quantite*p.remise/100) : 
+                                             p.prix*p.quantite}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3>
+                <b class="pull-right">Total:
+                  <span class="text-danger">{{detailedAchat.total}} DH</span>
+                </b>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="row" *ngFor="let l of lines;let i = index">
+  <div class="col-md-2">
+    <div class="form-group">
+      <angular2-multiselect [data]="produits" (onSelect)="selectionActionPerformed($event,lines[i])" [(ngModel)]="lines[i].produit"
+        [settings]="dropdownSettings" name="produits">
+      </angular2-multiselect>
+    </div>
+  </div>
+  <div class="col-md-1">
+    <div class="form-group form-group form-black label-floating  {{!edit?'is-empty':''}}">
+      <label class="control-label">Quantité</label>
+      <input class="form-control" [(ngModel)]="lines[i].quantite" (keyup)="updateTotals()" type="number">
+      <span class="text-danger" *ngIf="lines[i].produit && lines[i].produit[0].quantite - lines[i].quantite < lines[i].produit[0].min">
+        <b>Le minimum {{lines[i].produit[0].min}} pour ce produit est atteint.</b>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-2" *ngIf="lines[i].produit">
+    <div class="form-group form-group form-black label-floating {{lines[i].produit[0].prixRecommende ? '' : 'is-empty'}}">
+      <label class="control-label">Prix recommendé</label>
+      <input class="form-control" [value]="getPrice(i)" disabled>
+    </div>
+  </div>
+  <div class="col-md-1">
+    <div class="form-group form-group form-black label-floating {{!edit && !lines[i].produit?' is-empty ':''}} ">
+      <label class="control-label">Prix unitaire</label>
+      <input class="form-control" [(ngModel)]="lines[i].price" (keyup)="updateTotals()" type="number">
+    </div>
+  </div>
+  <div class="col-md-1" *ngIf="lines[i].produit && isAdmin">
+    <div class="form-group form-group form-black label-floating  ">
+      <label class="control-label">Prix de vente</label>
+      <input class="form-control" [(ngModel)]="lines[i].prixVente" (keyup)="updateTotals()" type="number">
+    </div>
+  </div>
+  <div class="col-md-1">
+    <div class="form-group form-group form-black label-floating {{!edit && lines[i].remise == undefined ?'is-empty':''}} ">
+      <label class="control-label">Remise %</label>
+      <input class="form-control" [(ngModel)]="lines[i].remise" (keyup)="updateTotals()" type="number">
+    </div>
+  </div>
+  <div class="col-md-2" *ngIf="lines[i].produit">
+    <div class="form-group">
+      <type-produit *ngIf="edit" [selectedType]="lines[i].type" (picked)="setTypeProduit(i,$event)"></type-produit>
+      <type-produit *ngIf="!edit" (picked)="setTypeProduit(i,$event)"></type-produit>
+    </div>
+  </div>
+  <div class="col-md-2 vente-line-total" >
+      <div class="form-group inline" *ngIf="lines[i].produit && lines[i].quantite">
+        <span> <b>{{getLineTotal(i) | number:'1.2'}} DH</b></span>
+      </div>
+      <button *ngIf="lines.length !== 1" (click)="removeLine(i)" class="btn btn-danger btn-simple btn-xs inline" rel="tooltip" title="Enlever cette ligne"
+        type="button">
+        <i class="material-icons">close</i>
+        <div class="ripple-container"></div>
+      </button>
+    </div>
+    
+</div>
+<hr />
+<div class="row" *ngIf="total">
+    <div class="col-md-2 col-md-offset-9">
+      <span>Total: <b class="text-success">{{ total }} DH</b></span>
+    </div>
+</div>
+<button (click)="addLine()" class="btn btn-warning" *ngIf="!edit && lines.length != produits.length">Ajouter produit</button>

@@ -1,0 +1,81 @@
+<div class="container">
+    <span>Total:
+        <b class="text-success" [style.color]="'blue'">{{pagedArray | mydate:date |sum:'montant' | number }} DH</b>
+    </span>
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-3">
+            <date-picker (picked)="date = $event"></date-picker>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4">
+            <div class="form-group form-black">
+                <input type="text" placeholder="Fournisseur" class="form-control" (ngModelChange)="search($event)"
+                    [ngModel]="keyword">
+            </div>
+        </div>
+        <div class="pull-right">
+            <pagination [itemsPerPage]="itemsPerPage" [totalItems]="paginationTotal" [maxSize]="maxSize"
+                [(ngModel)]="currentPage" previousText="Précedent" nextText="Suivant"
+                (pageChanged)="pageChanged($event)" *ngIf="isPaginationDisplayed()"></pagination>
+        </div>
+    </div>
+</div>
+<table class="table table-striped table-hover" *ngIf="achats.length != 0">
+    <thead>
+        <th class="text-center">
+            <b> Numéro </b>
+        </th>
+
+        <th class="text-center">
+            <b> Fournisseur </b>
+        </th>
+        <th class="text-center">
+            <b> Utilisateur </b>
+        </th>
+        <th class="text-center">
+            <b> Montant </b>
+        </th>
+        <th class="text-center">
+            <b>Date</b>
+        </th>
+
+
+        <th class="text-center" *ngIf="showActions">
+            Actions
+        </th>
+    </thead>
+    <tbody>
+
+        <tr *ngIf="(pagedArray | mydate:date )?.length == 0">
+            <td colspan="5">
+                <b class="text-danger">Aucun achat trouvé pour le filtre choisi</b>
+            </td>
+        </tr>
+        <tr *ngFor="let achat of pagedArray | mydate:date">
+            <td class="text-center">
+                <b>{{achat.id}}</b>
+            </td>
+            <td class="text-center">
+                <b>{{achat.fournisseur.name}}</b>
+            </td>
+            <td class="text-center">
+                <b>{{achat.user}}</b>
+            </td>
+            <td class="text-center">
+                <b>{{achat.montant}}</b>
+            </td>
+            <td class="text-center">
+                <b>
+                    <b>{{achat.date | date:'dd/MM/yyyy'}}</b>
+                </b>
+            </td>
+            <td class="text-center" *ngIf="showActions">
+                <a class="text-success" rel="nofollow" (click)="show(achat)">Consulter</a> /
+                <a class="text-warning" rel="nofollow" (click)="edit(achat)">Modifier</a>
+                <a *ngIf="isAdmin" rel="nofollow" (click)="delete(achat)">/ <span
+                        class="text-danger">Supprimer</span></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h4 *ngIf="!loading && achats.length == 0">Aucun achat dans cette agence.</h4>
+<spinner *ngIf="loading" [text]="'Chargement des achats'"></spinner>

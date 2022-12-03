@@ -1,0 +1,61 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div id="content">
+        <div class="card">
+          <div class="card-header" data-background-color="red">
+            <h4 class="title">Détail retour:</h4>
+          </div>
+          <spinner *ngIf="loading" [text]="'Chargement en cours'"></spinner>
+          <div class="card-content table-responsive" *ngIf="!loading">
+            <div>
+              <b>Agence: {{retour.agence.nom}}</b>
+            </div>
+            <br>
+            <br>
+            <div>
+              <b>Client: {{retour.client.nom}}</b>
+            </div>
+            <br>
+            <div>
+              <b>Type: {{retour.type === 'D' ? 'Détail' : 'Gros'}}</b>
+            </div>
+            <br>
+            <div>
+              <table class="table table-hover table-striped">
+                <thead>
+                  <th class="text-center">Produit</th>
+                  <th class="text-center">PU</th>
+                  <th class="text-center">Quantité</th>
+                  <th class="text-center">Remise</th>
+                  <th class="text-center">Total par produit</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let p of retour.produits">
+                    <td class="text-center">
+                      {{p.produit.name}}
+                    </td>
+                    <td class="text-center">{{p.prix}}</td>
+                    <td class="text-center">{{p.quantite}}</td>
+                    <td class="text-center">{{p.remise}}</td>
+                    <td class="text-center">{{p.remise!=0 ? p.prix*p.quantite-(p.prix*p.quantite*p.remise/100) : 
+                                             p.prix*p.quantite}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3>
+                <button class="btn btn-primary to-hide" (click)="goBack()">
+                  <i class="material-icons">
+                    keyboard_backspace
+                  </i> Retour</button>
+
+              </h3>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>

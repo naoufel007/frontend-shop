@@ -1,0 +1,34 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="newVentes()">
+      <i class="material-icons">add</i> Ajouter nouveau vente</button>
+    <div class="row">
+      <div [ngClass]="{'col-md-6': displayDetails,'col-md-12':!displayDetails }">
+        <div class="card">
+          <div class="card-header" data-background-color="green">
+            <h4 class="title">Liste des ventes:</h4>
+          </div>
+          <div class="card-content table-responsive">
+            <vente-list
+              *ngIf = "!loading"
+              [venteWrapper] = "venteWrapper"
+              (onDelete) = "delete($event)"
+              (onShow) = "show($event)"
+              (onEdit) = "edit($event)"
+              (onPaginate) = "paginate($event)"
+              (onDate) = "filterDate($event)"
+            ></vente-list>
+            
+            <spinner *ngIf="loading" [text]="'Chargement des ventes'"></spinner>
+          </div>
+        </div>
+      </div>
+      <sales-details
+        *ngIf = "displayDetails"
+        [detailedVente] = "detailedVente"
+        [displayed] = "displayDetails"
+        (close)="displayDetails = false"
+      ></sales-details>
+    </div>
+  </div>
+</div>

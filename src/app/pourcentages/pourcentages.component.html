@@ -1,0 +1,57 @@
+<div class="card">
+  <div class="card-header" data-background-color="blue"> 
+    <h4>Liste des pourcentages:</h4>
+  </div>
+
+  <div class="card-content">
+    <div class="tab-content">
+      <div class="tab-pane active {{editMode? 'pourcentage-edit':''}}" *ngIf="pourcentages && pourcentages.length != 0">
+        <div class="row" >
+          <div class="col-md-6 col-lg-6 ">
+            <div class="form-group form-black">
+              <input type="text" placeholder="Produit" class="form-control" [(ngModel)]="keyword">
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <pagination
+            class="pull-right"
+            [itemsPerPage]="itemsPerPage"
+            [totalItems]="pourcentages.length"
+            [(ngModel)]="currentPage" 
+            previousText="Précedent" 
+            nextText="Suivant"
+            (pageChanged)="pageChanged($event)" 
+            *ngIf="isPaginationDisplayed()"></pagination>
+          </div>
+        </div>
+        <!-- <div class="pull-right">
+          <pagination [totalItems]="commissions.length" [(ngModel)]="currentPage" previousText="Précedent" nextText="Suivant"
+            (pageChanged)="pageChanged($event)" [maxSize]="10" *ngIf="commissions && commissions.length != 0"></pagination>
+        </div> -->
+        <table class="table">
+          <thead>
+            <th class="text-center">Produit</th>
+            <th class="text-center">Pourcentage (%)</th>
+            <th class="text-center" *ngIf="!editMode">Date de dernière modification</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of pagedArray | filterBy:keyword:'produit'">
+
+              <td class="text-center">
+                <b>{{c.produit}}</b>
+              </td>
+              <td class="text-center">
+                <b *ngIf="!editMode">{{c.pourcentage}}</b>
+                <input type="text" placeholder="Pourcentage (%)" class="form-control" *ngIf="editMode" [(ngModel)]="c.pourcentage"><br/>
+                <span *ngIf="c.pourcentage >= 100" class="text-danger"><b>Attention!</b></span>
+              </td>
+              <td class="text-center" *ngIf="!editMode">
+                <b>{{c.date | date:'dd/MM/yyyy'}}</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

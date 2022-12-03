@@ -1,0 +1,66 @@
+<div class="card">
+
+  <div class="card-content">
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <h4 class="text-success">Liste des crédits:</h4>
+        <table class="table table-striped table-hover" *ngIf="credits?.length != 0">
+          <thead>
+            <th class="text-center">
+              <b> Numéro </b>
+            </th>
+            <th class="text-center">
+              <b> Montant (DH)</b>
+            </th>
+            <th class="text-center">
+              <b> Reste (DH)</b>
+            </th>
+            <th class="text-center">
+              <b> Utilisateur </b>
+            </th>
+            <th class="text-center">
+              <b> Agence </b>
+            </th>
+            <th class="text-center">
+              <b> Statut </b>
+            </th>
+            <th class="text-center">
+              <b> Date </b>
+            </th>
+            <th class="text-center">
+              <b> Actions </b>
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let credit of credits ">
+              <td class="text-center">
+                <b>{{credit.id}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{credit.montant}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{credit.reste}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{credit.user}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{credit.agence}}</b>
+              </td>
+              <td class="text-center {{credit.status == 'N' ? 'text-danger' : 'text-success'}}">
+                <b>{{credit.status == 'N' ? "Non payé":"Payé"}}</b>
+              </td>
+              <td class="text-center">
+                <b>{{credit.date | date:'dd/MM/yyyy'}}</b>
+              </td>
+              <td class="text-center">
+                <a class="text-success" rel="nofollow" (click)="show(credit)">Consulter</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <h4 *ngIf="credits?.length == 0">Aucun crédit trouvé.</h4>
+      </div>
+    </div>
+  </div>

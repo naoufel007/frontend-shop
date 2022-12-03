@@ -1,0 +1,16 @@
+<nav class="navbar navbar-transparent navbar-absolute">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" (click)="sidebarToggle()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand" >{{getTitle()}}</span>
+        </div>
+        <div class="collapse navbar-collapse">
+            <a href="#/" (click)="logout()" class="pull-right text-danger"><i class="material-icons">power_settings_new</i> &nbsp;Se déconnecter</a>
+        </div>
+    </div>
+</nav>

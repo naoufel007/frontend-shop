@@ -1,0 +1,147 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="container">
+            <div class="card" *ngIf="fournisseur">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">Détail du fournisseur </h4>
+                </div>
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h4>{{fournisseur.name}}</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><cite title="Adresse">{{fournisseur.adresse}} <i class="glyphicon glyphicon-map-marker"></i></cite></h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4><i class="glyphicon glyphicon-telephone"></i>{{fournisseur.telephone}} /
+                                {{fournisseur.fax}}</h4>
+                        </div>
+                    </div>
+                    <div>
+                        <button (click)="print()" class="btn btn-primary to-hide">Imprimer</button>
+                    </div>
+                    <div class="row" id="content">
+                        <div class="col-md-7">
+                            <dpicker [minDate]="minDate" [maxDate]="maxDate" (picked)="setDates($event)"></dpicker>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="card">
+                                <div class="card-header" data-background-color="blue">
+                                    <h4>Paiments:</h4>
+                                </div>
+
+                                <div class="card-content" *ngIf="fournisseur">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active">
+                                            <div class="row">
+                                                <div class="col-md-6 col-lg-6">
+                                                    <p>Total: <b class="text-success">{{sumPaiments | number }} DH</b></p>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6">
+                                                    <p>Reste: <b class="text-success" [style.color]="resteColor">{{sumAchats
+                                                            - sumPaiments | number }} DH</b></p>
+                                                </div>
+
+                                            </div>
+                                            <button (click)="addPaimentDisplayed = true" type="button" class="btn btn-primary btn-sm to-hide">Ajouter
+                                                paiment</button>
+
+                                            <table class="table">
+                                                <thead>
+                                                    <th class="text-center">Date de paiment</th>
+                                                    <th class="text-center">Montant (DH)</th>
+                                                    <th class="text-center">Type</th>
+                                                    <th class="text-center">Profil</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngIf="!addPaimentDisplayed && (fournisseur.paiments | between : minDate : maxDate)?.length == 0">
+                                                        <td class="text-danger"><b>Aucun paiment trouvé</b></td>
+                                                    </tr>
+                                                    <tr *ngIf="addPaimentDisplayed">
+                                                        <td class="text-center"><input class="form-control" type="number"
+                                                                placeholder="Montant" [(ngModel)]="newPaiment.montant"></td>
+                                                        <td class="text-center">
+                                                            <select [(ngModel)]="newPaiment.type" class="form-control">
+                                                                <option *ngFor="let t of availablePaimentTypes" [ngValue]="t">{{t}}</option>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <button (click)="submitPaiment()" type="button" title="Valider"
+                                                                class="btn btn-success btn-sm to-hide">
+                                                                Valider
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <button (click)="cancelPaiment()" type="button" title="Annuler"
+                                                                class="btn btn-danger btn-sm to-hide">
+                                                                Annuler
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngFor="let p of fournisseur.paiments | between : minDate : maxDate ">
+
+                                                        <td class="text-center">{{p.date | date:'dd/MM/yyyy'}}</td>
+                                                        <td class="text-center">{{p.montant}}</td>
+                                                        <td class="text-center">{{p.type}}</td>
+                                                        <td class="text-center">{{p.user}}</td>
+                                                        <td class="td-actions text-right">
+                                                            <button (click)="deletePaiment(p)" type="button" rel="tooltip"
+                                                                title="Supprimer ce paiment" class="btn btn-danger btn-simple btn-xs to-hide">
+                                                                <i class="material-icons">close</i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="card">
+                                <div class="card-header" data-background-color="blue">
+                                    <h4>Achats:</h4>
+                                </div>
+
+                                <div class="card-content">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="profile">
+                                            <p>Total: <b class="text-success" [style.color]="'blue'">{{sumAchats |
+                                                    number }} DH</b></p>
+                                            <table class="table">
+                                                <thead>
+                                                    <th>Date d'achat</th>
+                                                    <th>Montant</th>
+                                                    <th>Agence</th>
+                                                    <th>Profil</th>
+                                                    <th>Actions</th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngIf="(fournisseur.achats | between : minDate : maxDate)?.length == 0">
+                                                        <td class="text-danger"><b>Aucun achat trouvé</b></td>
+                                                    </tr>
+                                                    <tr *ngFor="let a of fournisseur.achats | between : minDate : maxDate">
+
+                                                        <td>{{a.date | date:'dd/MM/yyyy'}}</td>
+                                                        <td>{{a.montant}}</td>
+                                                        <td>{{a.agence.name}}</td>
+                                                        <td>{{a.user}}</td>
+                                                        <td><a class="text-success" rel="nofollow" (click)="show(a)">Consulter</a></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

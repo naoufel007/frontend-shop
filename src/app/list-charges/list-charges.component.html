@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="redirect(agence.id)">
+      <i class="material-icons">add</i> Ajouter une nouvelle charge</button>
+  </div>
+  <br />
+  <div class="card-header" data-background-color="green">
+    <h4 class="title"><b>{{agence.name}}</b></h4>
+    <span>Capital initial: <b>{{chargesWrapper.capital | number:'1.2'}} DH</b></span>
+    <span>Total des ventes: <b>{{chargesWrapper.totalVentes| number:'1.2'}} DH</b></span>
+    <span>Total des achats: <b>{{chargesWrapper.totalAchats| number:'1.2'}} DH</b></span>
+    <br/>
+    <span>Total des service: <b>{{chargesWrapper.totalServices| number:'1.2'}} DH</b></span>
+    <span>Total des retours: <b>{{chargesWrapper.totalRetours| number:'1.2'}} DH</b></span>
+  </div>
+  <div class="card-content table-responsive">
+
+    <table class="table">
+      <thead class="text-danger">
+        <tr>
+          <th class="text-center">Montant</th>
+          <th class="text-center">Type</th>
+          <th class="text-center">Date</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="! chargesWrapper.charges ||  chargesWrapper.charges.length == 0">
+          <td colspan="4">
+            <b class="text-danger">Aucune charge trouvée.</b>
+          </td>
+        </tr>
+        <tr *ngFor="let c of chargesWrapper.charges">
+          <td class="text-center">{{c.montant}}</td>
+          <td class="text-center">{{c.type}}</td>
+          <td class="text-center">{{c.date | date:'dd/MM/yyyy hh:mm:ss'}}</td>
+          <td class="text-center">
+            <a class="text-warning" rel="nofollow" (click)="edit(c)">Modifier</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

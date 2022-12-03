@@ -1,0 +1,24 @@
+<div>
+  <br/>
+  <h4 class="text-success"><b><u>Paiements:</u></b></h4>
+  <table class="table table-hover table-striped">
+    <thead>
+      <th class="text-center">Référence</th>
+      <th class="text-center">Montant(DH)</th>
+      <th class="text-center">Date</th>
+      <th class="text-center">Type</th>
+      <th class="text-center">N° chéque</th>
+      <th class="text-center">Utilisateur</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of paiments">
+        <td class="text-center">{{p.id}}</td>
+        <td class="text-center">{{p.montant}}</td>
+        <td class="text-center">{{p.date | date:'dd/MM/yyyy'}}</td>
+        <td class="text-center">{{getFullType(p.type)}}</td>
+        <td class="text-center">{{p.checkNumber || '-'}}</td>
+        <td class="text-center">{{p.user}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,27 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card">
+        <div class="card-header" data-background-color="green">
+          <h4 class="title">Liste des chèques:</h4>
+        </div>
+        <div class="card-content table-responsive">
+          <div class="row">
+            <tabset [justified]="true">
+              <tab heading="Ventes">
+                  <checks-vente
+                    [url] = "'paymentVenteCheque'"
+                  ></checks-vente>
+              </tab>
+              <tab heading="Crédits">
+                <checks-vente
+                    [url] = "'paymentCreditCheque'"
+                  ></checks-vente>
+              </tab>
+            </tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

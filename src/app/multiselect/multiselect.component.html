@@ -1,0 +1,10 @@
+<angular2-multiselect 
+[data]="list" 
+[(ngModel)]="selectedItems"
+(onSelect)="selectionActionPerformed($event)"
+(onDeSelect)="selectionActionPerformed($event)" 
+(onSelectAll)="selectionActionPerformed($event)" 
+(onDeSelectAll)="selectionActionPerformed($event)"
+[settings]="dropdownSettings" name="agences">
+
+</angular2-multiselect> 

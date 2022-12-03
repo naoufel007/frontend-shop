@@ -1,0 +1,22 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+          <div *ngIf="!addNewFournisseur">
+              <button class="btn btn-success" (click)="addNewFournisseur = true"><i class="material-icons">add</i>  Ajouter nouveau fournisseur</button>
+              <list-fournisseur 
+                  [fournisseurs]="fournisseurs$"
+                  [loadingFournisseurs] = "loadingFournisseurs"
+                  [agences] = "agences"
+                  (deleted)="delete($event)" 
+                  (edit)="editFournisseur($event)"
+                  (update)="updateFournisseur($event)"></list-fournisseur>
+          </div>
+          <new-fournisseur 
+                  *ngIf="addNewFournisseur"
+                  (create)="create($event)"
+                  (cancel)="cancel()" ></new-fournisseur>
+      </div>
+    </div>
+  </div>
+</div>

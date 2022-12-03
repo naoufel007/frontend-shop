@@ -1,0 +1,71 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <button class="btn btn-success" (click)="redirect()">
+      <i class="material-icons">add</i> Ajouter nouveau client</button>
+    <div class="card">
+      <div class="card-header" data-background-color="green">
+        <h4 class="title">Liste des clients:</h4>
+      </div>
+
+      <div class="card-content table-responsive">
+        <div class="row search-field">
+          <div class="form-group form-black label-floating is-empty col-md-3">
+            <label class="control-label">Recherche</label>
+            <input type="text" class="form-control" (keyup)="searchTerm$.next($event.target.value)">
+          </div>
+          <div class="col-md-1 col-sm-1">
+            <div class="form-group">
+              Agence:
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-2" *ngIf="agences?.length != 0">
+            <div class="form-group">
+              <select style="display:inline" class="form-control" id="sel1" [(ngModel)]="chosenAgence">
+                <option [ngValue]=""></option>
+                <option *ngFor="let a of agences" [ngValue]="a.id">{{a.name}}</option>
+              </select>
+            </div>
+          </div>
+          <pagination class="pull-right" [totalItems]="clients.length" [(ngModel)]="currentPage" previousText="Précedent"
+            nextText="Suivant" [maxSize]="maxSize" [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)"
+            *ngIf="isPaginationDisplayed()"></pagination>
+        </div>
+        <span><b>Total des crédits:</b> {{totalCredits | number}} DH</span>
+        <table class="table" *ngIf="clients && !loadingClients">
+          <thead class="text-danger">
+            <tr>
+              <th class="text-center">Nom</th>
+              <th class="text-center">CIN</th>
+              <th class="text-center">Téléphone</th>
+              <th class="text-center">Points</th>
+              <th class="text-center">Max crédit</th>
+              <th class="text-center">Reste du crédit</th>
+              <th class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="(pagedArray | agence : chosenAgence)?.length == 0">
+              <td colspan="6">
+                <b class="text-danger">Aucun utilisateur trouvé.</b>
+              </td>
+            </tr>
+            <tr *ngFor="let c of pagedArray | agence : chosenAgence">
+              <td class="text-center">{{c.nom}}</td>
+              <td class="text-center">{{c.cin}}</td>
+              <td class="text-center">{{c.telephone}}</td>
+              <td class="text-center">{{c.points}}</td>
+              <td class="text-center">{{c.credit}}</td>
+              <td class="text-center">{{c.reste}}</td>
+              <td class="text-center">
+                <a class="text-success" rel="nofollow" (click)="show(c)">Consulter</a> /
+                <a class="text-warning" rel="nofollow" (click)="edit(c)">Modifier</a> /
+                <a class="text-secondary" rel="nofollow" >Supprimer</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <spinner *ngIf="loadingClients" [text]="'Chargemens des clients'"></spinner>
+      </div>
+    </div>
+  </div>
+</div>

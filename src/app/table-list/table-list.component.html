@@ -1,0 +1,61 @@
+<div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">{{title}}</h4>
+                </div>
+                <div class="row search-field">
+                        <div class="form-group form-black label-floating is-empty col-md-4">
+                            <label class="control-label">Recherche</label>
+                            <input  type="text" class="form-control" [(ngModel)]="keyword">
+                        </div>
+                </div>
+                <div class="card-content table-responsive">
+                    <table class="table" *ngIf="data.length != 0">
+                        <thead class="text-danger">
+                            <tr >
+                                <th class="text-center" *ngFor="let item of headers">{{item}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data">
+                                <td class="text-center" *ngFor=" let p of properties">{{item[p]}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <span *ngIf="data.length == 0">{{emptyMessage}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12" *ngIf="false">
+            <div class="card card-plain">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">Table on Plain Background</h4>
+                    <p class="category">Here is a subtitle for this table</p>
+                </div>
+                <div class="card-content table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Salary</th>
+                                <th>Country</th>
+                                <th>City</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Dakota Rice</td>
+                                <td>$36,738</td>
+                                <td>Niger</td>
+                                <td>Oud-Turnhout</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

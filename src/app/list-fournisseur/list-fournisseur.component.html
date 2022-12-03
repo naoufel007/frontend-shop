@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-12" *ngIf="! fournisseurToEdit">
+        <div class="card">
+            <div class="card-header" data-background-color="red">
+                <h4 class="title">Liste des fournisseurs</h4>
+            </div>
+            <spinner *ngIf="loadingFournisseurs" [text]="'Chargement des fournisseurs'"></spinner>
+            <div class="row search-field" *ngIf="fournisseurs?.length != 0 && ! fournisseurToEdit">
+                <div class="form-group form-black label-floating is-empty col-md-4">
+                    <label class="control-label">Recherche</label>
+                    <input type="text" class="form-control" [(ngModel)]="keyword">
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        Agence:
+                    </div>
+                </div>
+                <div class="col-md-4" *ngIf="agences.length != 0">
+                    <div class="form-group">
+                        <select style="display:inline" class="form-control" id="sel1" [(ngModel)]="chosenAgence">
+                            <option [ngValue]=""></option>
+                            <option *ngFor="let a of agences" [ngValue]="a.id">{{a.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card-content table-responsive">
+                <span><b>Total des crédits:</b> {{totalCredits | number}} DH</span>
+                <table class="table" *ngIf="fournisseurs?.length != 0 && ! fournisseurToEdit">
+                    <thead class="text-danger">
+                        <tr>
+                            <th class="text-center">Nom</th>
+                            <th class="text-center">Tél</th>
+                            <th class="text-center">Fax</th>
+                            <th class="text-center">Addresse</th>
+                            <th class="text-center">Reste (DH)</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let f of fournisseurs  | filter : keyword | agence : chosenAgence">
+                            <td class="text-center">{{f.name}}</td>
+                            <td class="text-center">{{f.telephone}}</td>
+                            <td class="text-center">{{f.fax}}</td>
+                            <td class="text-center">{{f.adresse}}</td>
+                            <td class="text-center">{{f.reste}}</td>
+                            <td class="text-center">
+                                <a class="text-success" rel="nofollow" [routerLink]="['/detail-fournisseur',f.id]">Consulter</a> /
+                                <a class="text-warning" rel="nofollow" (click)="edit(f)">modifier</a> /
+                                <a class="text-secondary" rel="nofollow" >Supprimer</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span *ngIf="!loadingFournisseurs && fournisseurs?.length == 0">Aucun fournisseur à afficher</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" *ngIf="fournisseurToEdit">
+        <new-fournisseur [newFournisseur]="getFournisseurToEdit()" [editMode]="true" (edit)="updateFournisseur($event)" (cancel)="cancelUpdate()"></new-fournisseur>
+    </div>
+</div>

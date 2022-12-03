@@ -1,0 +1,40 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div>
+        <div class="card">
+          <div class="card-header" data-background-color="green">
+            <h4 class="title">Nouvelle charge:</h4>
+          </div>
+          <div class="card-content">
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-black">
+                    <label class="control-label">Montant</label>
+                    <input required name="montant" type="number" class="form-control" [(ngModel)]="charge.montant">
+                  </div>
+                </div>
+                <br>
+                <div class="col-md-6">
+                  <div class="form-group form-black">
+                    <type-charge (picked)="charge.type = $event"></type-charge>
+                  </div>
+                </div>
+
+                
+              </div>
+              <div class="row">
+                  <button type="submit" class="btn btn-success pull-right" (click)="create()">
+                      <i class="material-icons">add</i> Ajouter</button>
+                    <button type="submit" class="btn btn-danger pull-right" (click)="cancel()">
+                      <i class="material-icons">clear</i> Annuler</button>
+                    <div class="clearfix"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

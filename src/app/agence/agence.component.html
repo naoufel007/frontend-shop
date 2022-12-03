@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header" data-background-color="green">
+        <h4 class="title">Agence: <b>{{agence.name}}</b></h4>
+        <span>Retours: <b>{{agence.totalRetours}} DH</b></span>
+        <span>Ventes: <b>{{agence.ventes | sum :'montant' | number}} DH</b></span>
+        <span>Crédit: <b>{{agence.totalCredit | number}} DH</b></span>
+        <span>Service: <b>{{agence.totalServices | number}} DH</b></span>
+        <span>Gain: <b>{{agence.gain | number}} DH</b></span>
+        <br>
+        <span class="pull-right"><b>{{howMuchToPay | number}}</b> DH à payer.</span><br>
+    </div>
+    <div class="card-content table-responsive">
+        <agence-employees
+            [employees]="agence.users"
+            [loading] = "agence.loading"
+        ></agence-employees>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" data-background-color="red">
+                        <h4 class="title">Nouveau profil</h4>
+                    </div>
+                    <div class="card-content">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Nom</label>
+                                        <input required name="fname"  type="text" class="form-control" [(ngModel)]="newProfile.nom" >
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Prénom</label>
+                                        <input required name="lname"  type="text" class="form-control" [(ngModel)]="newProfile.prenom">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">CNI</label>
+                                        <input required name="cni"  type="text" class="form-control" [(ngModel)]="newProfile.cni">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Mot de passe</label>
+                                        <input required name="pwd"  type="password" class="form-control" [(ngModel)]="newProfile.password">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Email</label>
+                                        <input required name="email"  type="email" class="form-control" [(ngModel)]="newProfile.email" >
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">N° Tél</label>
+                                        <input required name="tel"  type="text" class="form-control" [(ngModel)]="newProfile.tel">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success pull-right" (click)="createProfile()"><i class="material-icons">add</i> Ajouter</button>
+                            <button type="submit" class="btn btn-danger pull-right" (click)="cancelProfile()"><i class="material-icons">clear</i> Annuler</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    

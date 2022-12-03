@@ -1,0 +1,11 @@
+<div class="row">
+  <h4 class="text-success"><b><u>Historique du produit:</u></b></h4>
+  <tabset [justified]="true">
+    <tab heading="Achats">
+      <product-history-achats [achats]="productHistory.achats"></product-history-achats>
+    </tab>
+    <tab heading="Ventes">
+      <product-history-ventes [ventes]="productHistory.ventes"></product-history-ventes>
+    </tab>
+  </tabset>
+</div>

@@ -1,0 +1,25 @@
+<div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="pull-left">
+                        filtrer par date:
+                    </label>
+                </div>
+                <div class="col-md-3">
+                    <date-picker (picked)="dateFilterFrom($event)"></date-picker>
+                </div>
+                <div class="col-md-3">
+                    <date-picker (picked)="dateFilterTo($event)"></date-picker>
+                </div>
+            </div>
+            <div class="row" *ngIf="agences.length != 0">
+                <div class="col-md-6 col-sm-6" *ngFor="let a of agences">
+                    <agence [agence] ="a"></agence>
+                </div>
+            </div>
+            <div *ngIf="agences.length == 0" class="text-center">
+                <h4 >Chargement des agences en cours</h4>
+            </div>
+        </div>
+</div>

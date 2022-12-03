@@ -1,0 +1,63 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card">
+        <div class="card-header" data-background-color="red">
+          <h4 class="title">Détail achat:</h4>
+        </div>
+        <spinner
+            *ngIf="loading"
+            [text] = "'Chargement en cours'"
+        ></spinner>
+        <div class="card-content table-responsive" *ngIf="!loading">
+          <div>
+            <b>Agence:</b>
+            <h4>{{achat.agence.name}}</h4>
+          </div>
+          <div>
+            <b>Fournisseur:</b>
+            <h4>{{achat.fournisseur.name}}</h4>
+          </div>
+          <div>
+            <b>Date:</b>
+            <h4>{{achat.date.date | date:'dd/MM/yyyy'}}</h4>
+          </div>
+          <div>
+            <table class="table table-hover table-striped">
+              <thead>
+                <th class="text-center">Produit</th>
+                <th class="text-center">PU</th>
+                <th class="text-center">Quantité</th>
+                <th class="text-center">Remise</th>
+                <th class="text-center">Total par produit</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of achat.produit">
+                  <td class="text-center">
+                    {{p.produit.name}}
+                  </td>
+                  <td class="text-center">{{p.prix}}</td>
+                  <td class="text-center">{{p.quantite}}</td>
+                  <td class="text-center">{{p.remise}}</td>
+                  <td class="text-center">{{p.remise!=0 ? p.prix*p.quantite-(p.prix*p.quantite*p.remise/100) : 
+                                             p.prix*p.quantite}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <h3>
+              <b class="pull-right">Total:
+                <span class="text-danger">{{achat.total}} DH</span>
+              </b>
+              <div class="pull-left">
+                <button class="btn btn-primary" (click)="goBack()">
+                  <i class="material-icons">
+                    keyboard_backspace
+                  </i> Retour</button>
+              </div>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

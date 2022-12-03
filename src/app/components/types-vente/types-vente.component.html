@@ -1,0 +1,8 @@
+Type de vente:
+<br/>
+<angular2-multiselect 
+  [data]="types" 
+  (onSelect)="selectionActionPerformed($event)"
+  [(ngModel)]="selectedType"
+  [settings]="typesDropdownSettings" name="type-ventes">
+</angular2-multiselect> 

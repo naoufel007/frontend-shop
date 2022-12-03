@@ -1,0 +1,91 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="card">
+        <div class="card-header" data-background-color="red">
+          <h4 class="title">Détail de l'utilisateur:</h4>
+
+        </div>
+        <div class="card-content table-responsive">
+          <div>
+            <spinner *ngIf="loading" [text]="'Chargement de l\'utilisateur en cours...'"></spinner>
+            <div *ngIf="!loading && !user?.id" class="form-group">
+              <h4 class="title">Aucun utilisateur trouvé!</h4>
+            </div>
+          </div>
+          <div *ngIf="!loading && user?.id">
+            <span class="text-success">
+              <h5>
+                <u>
+                  <b>Informations personnelles:</b>
+                </u>
+              </h5>
+            </span>
+            <div class="row">
+              <div class="col-md-3 col-sm-6 col-lg-3">
+                <b>Nom:</b>
+                <h4>{{user.name}}</h4>
+              </div>
+              <div class="col-md-3 col-sm-6 col-lg-3">
+                <b>CIN:</b>
+                <h4>{{user.cin}}</h4>
+              </div>
+              <div class="col-md-3 col-sm-6 col-lg-3">
+                <b>Addresse:</b>
+                <h4>{{user.addresse}}</h4>
+              </div>
+              <div class="col-md-3 col-sm-6 col-lg-3">
+                <b>Agence:</b>
+                <h4>{{user.agence.name}}</h4>
+              </div>
+            </div>
+            <div class="row">
+              <tabset [justified]="true">
+                <tab heading="Commissions" (select)="loadCommissions()">
+                    <spinner
+                    [text]="'Chargement des commissions...'"
+                    *ngIf="loadingCommissions"
+                  ></spinner>
+                  <commissions [user]="user" [commissions]="user.commissions" *ngIf="!loadingCommissions"></commissions>
+                </tab>
+                <tab heading="Achats" (select)="loadAchats()">
+                  <!-- <pourcentages [pourcentages]="user.pourcentages" *ngIf="user.pourcentages"></pourcentages> -->
+                  <spinner
+                    [text]="'Chargement des achats...'"
+                    *ngIf="loadingAchats"
+                  ></spinner>
+                  <achat-list [loading]="loadingAchats" [achats]="user.achats" [showActions]="false" *ngIf="!loadingAchats"></achat-list>
+                </tab>
+                <tab heading="Ventes" (select)="loadVentes()">
+                  <spinner
+                    [text]="'Chargement des ventes...'"
+                    *ngIf="loadingVentes"
+                  ></spinner>
+                  <vente-list
+                      *ngIf = "!loadingVentes"
+                      [venteWrapper] = "user.venteWrapper"
+                      [showActions] = "false"
+                      [showUser] = "false"
+                      (onDelete) = "delete($event)"
+                      (onPaginate) = "paginate($event)"
+                      (onDate) = "filterDate($event)"
+                    ></vente-list>
+                </tab>
+              </tabset>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" (click)="goBack()">
+            <i class="material-icons">
+              keyboard_backspace
+            </i> Retour</button>
+          <button class="btn btn-danger" (click)="edit()">
+            <i class="material-icons">
+              create
+            </i> Modifier</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
